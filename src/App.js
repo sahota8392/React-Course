@@ -1,6 +1,28 @@
-import logo from './logo.svg';
+import './App.css';
+/* Adding the navigation bar */
+import React, { Component } from 'react';
+import { Navbar, NavbarBrand } from 'reactstrap';
 import './App.css';
 
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+                <Navbar dark color="primary">
+                <div className="container">
+                    <NavbarBrand href="/">NuCamp</NavbarBrand>
+                </div>
+                </Navbar>
+            </div>
+        );
+    }
+} 
+
+export default App;
+
+/* Navigation bar added above */
+
+/* Replaced all this to the navigation code above
 function App() {
   return (
     <div className="App">
@@ -20,6 +42,6 @@ function App() {
       </header>
     </div>
   );
-}
+*/
 
-export default App;
+
