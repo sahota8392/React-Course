@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
+import CampsiteInfo from './CampsiteInfoComponent';
 
 /* CLASS COMPONENT EXAMPLE 
 1. begins with class keyword
@@ -12,10 +13,11 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
 5. first line of constructor must be super(props)
     -so props are communicated to base constructor in parent component
 6. if using state, this.state must equal to object*/
-class Directory extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+
+class Directory extends Component {                 //JSX - create child class from the parent class
+    constructor(props) {                            //Must include props when you have constructor ('properties')
+        super(props);                               //this.props = props in this constructor, use w/constructor - required
+        this.state = {                              //special property that needs to hold an object
             selectedCampsite: null 
         };
     } 
@@ -24,6 +26,7 @@ class Directory extends Component {
         this.setState({selectedCampsite: campsite});
     }
 
+/* Removing in week 2 as this is in CampsiteInfo.js
     renderSelectedCampsite(campsite) {
         if(campsite) {
             return(
@@ -38,6 +41,7 @@ class Directory extends Component {
         }
         return <div />;
     }
+*/
 
     /*render method will pull data for each campsite, using map from array we added to state above (id: 0,1,2,3) then will go thru each format to format name/description */
     render() {
@@ -59,11 +63,7 @@ class Directory extends Component {
                 <div className="row">
                     {directory}
                 </div>
-            <div className="row">
-                <div className="col-md-5 m-1">
-                    {this.renderSelectedCampsite(this.state.selectedCampsite)}
-                </div>
-            </div>
+            <CampsiteInfo campsite={this.state.selectedCampsite} />
             </div>
         );
     }
