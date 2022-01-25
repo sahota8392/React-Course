@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 import CampsiteInfo from './CampsiteInfoComponent';     //pulling data from CampsiteInfoComponent file for the comments to be displayed
 
@@ -14,6 +14,7 @@ import CampsiteInfo from './CampsiteInfoComponent';     //pulling data from Camp
     6. If using state, this.state must equal to object
 */
 
+{/*     UPDATED IN WEEK 2 - TO THE FUNCTIONAL COMPONENT
 class Directory extends Component {                 //JSX - create child class DIRECTORY from the parent class COMPONENT imported from the standard REACT above
 
     constructor(props) {                            //Must include props when you have constructor ('properties')
@@ -23,13 +24,14 @@ class Directory extends Component {                 //JSX - create child class D
         };
     } 
 
-/* Removing this for the OnClick supplied by Main component thru props instead
+
+                                                                    Removing this for the OnClick supplied by Main component thru props instead
     onCampsiteSelect(campsite) {
         this.setState({selectedCampsite: campsite});
     }
-*/
 
-/*                                                       Removing in week 2 as this is in CampsiteInfo.js
+
+                                                                    Removing in week 2 as this is in CampsiteInfo.js
     renderSelectedCampsite(campsite) {
         if(campsite) {
             return(
@@ -44,14 +46,14 @@ class Directory extends Component {                 //JSX - create child class D
         }
         return <div />;
     }
-*/
+
 
 render() {                                      
         const directory = this.props.campsites.map(campsite => {                    //Pull data for each site using map on array we added to state above {id: 0, 1, 2, 3} then will go thru each to format name-description
             return (
                 <div key={campsite.id} className="col-md-5 m-1">
                         <Card onClick ={() => this.props.onClick(campsite.id)}>
-{/* <Card onClick={() => this.onCampsiteSelect(campsite)}>   Removed this and updated*/}
+{/* <Card onClick={() => this.onCampsiteSelect(campsite)}>                              Removed this line and updated to above line
                         <CardImg width="100%" src={campsite.image} alt={campsite.name} />
                         <CardImgOverlay>
                             <CardTitle>{campsite.name}</CardTitle>
@@ -60,6 +62,28 @@ render() {
                 </div>
             );
         });
+*/} 
+
+function RenderDirectoryItem({campsite, onClick}) {
+    return (
+        <Card onClick={() => onClick(campsite.id)}>
+            <CardImg width="100%" src={campsite.image} alt={campsite.name} />
+            <CardImgOverlay>
+                <CardTitle>{campsite.name}</CardTitle>
+            </CardImgOverlay>
+        </Card>
+    );
+}
+
+function Directory(props) {
+    const directory = props.campsites.map(campsite => {
+        return(
+            <div key={campsite.id} className="col-md-5 m-1">
+                <RenderDirectoryItem campsite={campsite} onClick={props.onClick} />
+            </div>
+        );
+    });
+
 
         return (
             <div className="container">
@@ -69,7 +93,6 @@ render() {
 {/* <CampsiteInfo campsite={this.state.selectedCampsite}/>       Rather than calling renderSelectedCampsite above that we cleared, we will call CampsiteInfo from CampsiteInfoComponent.js but removing in week 2 for the onClick - this.props  */}  
             </div>
         );
-    }
 }
 
 export default Directory;
