@@ -23,9 +23,11 @@ class Directory extends Component {                 //JSX - create child class D
         };
     } 
 
+/* Removing this for the OnClick supplied by Main component thru props instead
     onCampsiteSelect(campsite) {
         this.setState({selectedCampsite: campsite});
     }
+*/
 
 /*                                                       Removing in week 2 as this is in CampsiteInfo.js
     renderSelectedCampsite(campsite) {
@@ -48,7 +50,8 @@ render() {
         const directory = this.props.campsites.map(campsite => {                    //Pull data for each site using map on array we added to state above {id: 0, 1, 2, 3} then will go thru each to format name-description
             return (
                 <div key={campsite.id} className="col-md-5 m-1">
-                    <Card onClick={() => this.onCampsiteSelect(campsite)}>
+                        <Card onClick ={() => this.props.onClick(campsite.id)}>
+{/* <Card onClick={() => this.onCampsiteSelect(campsite)}>   Removed this and updated*/}
                         <CardImg width="100%" src={campsite.image} alt={campsite.name} />
                         <CardImgOverlay>
                             <CardTitle>{campsite.name}</CardTitle>
@@ -63,7 +66,7 @@ render() {
                 <div className="row">
                     {directory}
                 </div>                                                          
-                    <CampsiteInfo campsite={this.state.selectedCampsite}/>       {/* Rather than calling renderSelectedCampsite above that we cleared, we will call CampsiteInfo from CampsiteInfoComponent.js */}  
+{/* <CampsiteInfo campsite={this.state.selectedCampsite}/>       Rather than calling renderSelectedCampsite above that we cleared, we will call CampsiteInfo from CampsiteInfoComponent.js but removing in week 2 for the onClick - this.props  */}  
             </div>
         );
     }

@@ -24,7 +24,7 @@ class CampsiteInfo extends Component {                  //JSX - create child cla
                 <div className="col-md-5 m-1">
                     <h4>Comments</h4>                                       
                     {
-                        comments.map( comment => {                          //.map iterates thru arry and performs given cllback function each time -- {Embeding JavaScript within JSX}
+                        comments.map( comment => {                          //.map iterates thru array and performs given callback function each time -- {Embeding JavaScript within JSX}
                             return (
                                 <div key={comment.id}>                      {/* searching comments by the id for each */}
                                 <p> 
@@ -38,7 +38,7 @@ class CampsiteInfo extends Component {                  //JSX - create child cla
 
                         })
                     }
-                </div>
+                </div>                                                         //Return empty div if none of the above is applicable
             )
         }
     }
@@ -46,11 +46,13 @@ class CampsiteInfo extends Component {                  //JSX - create child cla
     render(){                                       
         if(this.props.campsite){                                //checking if an object with name "campsite" (passed thru props) is truthy (not null)
             return (
-                <div className="row">                                       {/* Boostrap row class as attibute */}
-                    {this.renderCampsite(this.props.campsite)}              {/* Calling renderCampSite function for the campsite */}
-                    {this.renderComments(this.props.campsite.comments)}     {/* Calling the render function for the comments */}
+                <div className ="container">
+                    <div className="row">                                       {/* Boostrap row class as attibute */}
+                        {this.renderCampsite(this.props.campsite)}              {/* Calling renderCampSite function for the campsite */}
+                        {this.renderComments(this.props.campsite.comments)}     {/* Calling the render function for the comments */}
+                    </div>
                 </div>
-            )
+            );
         }
         return (
             <div />                                     //will return empty div with no class if it's null
