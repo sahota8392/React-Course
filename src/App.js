@@ -1,24 +1,25 @@
 import './App.css';
 /* Adding the navigation bar */
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
-import './App.css';
-import Directory from './components/DirectoryComponent';
-import { CAMPSITES } from './shared/campsites';
+import { BrowserRouter } from 'react-router-dom';           //importing the React router after installing it
 import Main from './components/MainComponent';
+import './App.css';
+
+
+
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state ={
-      campsites: CAMPSITES
-    };
-  }
-
     render() {
         return (
+          <BrowserRouter>  {/* highest level componenet which gives it access to the main component and its children*/}            
             <div className="App">
               <Main />
+            </div>
+          </BrowserRouter>
+        );
+    }
+}
+
 {/* 
                 <Navbar dark color="primary">
                 <div className="container">
@@ -26,10 +27,7 @@ class App extends Component {
                 </div>
                 </Navbar>
 <Directory campsites={this.state.campsites} />  Removing during comoponent exercise*/}
-            </div>
-        );
-    }
-} 
+
 
 export default App;
 

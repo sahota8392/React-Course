@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Jumbotron } from 'reactstrap';
+import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
+    constructor(props) {
+        super(props);
+
+        this.toggleNav = this.toggleNav.bind(this);     //bind to the componenet; ensures when toggleNav is called, the "this" keyword in here refers correctly to the component
+        this.state={
+            isNavOpen: false
+        };
+    }
+
+    toggleNav() {                                   //when triggered, state will change, if false will turn to true
+        this.setState({
+            isNavOpen: !this.state.isNavOpen
+        });
+    }
+
     render() {
-        return(
+        return (
             <React.Fragment>
                 <Jumbotron fluid>
                     <div className="container">
@@ -16,9 +32,42 @@ class Header extends Component {
                     </div>
                 </Jumbotron>
 
-                <Navbar dark sticky="top">
-                    <div className='container'>
-                        <NavbarBrand href="/">NuCamp</NavbarBrand>
+                <Navbar dark sticky="top" expand="md">    {/* From Bootstrap - navbar will collapse if viewport is smaller */}
+                    <div className="container">
+                        <NavbarBrand className="mr-auto" href="/">
+                            <img src="/assets/images/logo.png" height="30" width="30" alt="NuCamp logo" /> 
+                        </NavbarBrand>
+
+                        <NavbarToggler onClick={this.toggleNav} />      {/* triggers toggleNav method */}
+
+                    <Collapse isOpen={this.state.isNavOpen} navbar>     {/* Navlinks are added here under Navbar */}
+                        <Nav navbar>
+                            <NavItem>
+                                <NavLink className="nav-link" to="/home">
+                                    <i className="fa fa-home fa-lg" /> Home
+                                </NavLink>
+                            </NavItem>
+
+                            <NavItem>
+                                    <NavLink className="nav-link" to="/directory">
+                                        <i className="fa fa-list fa-lg" /> Directory
+                                    </NavLink>
+                                </NavItem>
+
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/aboutus">
+                                        <i className="fa fa-info fa-lg" /> About
+                                    </NavLink>
+                                </NavItem>
+
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/contactus">
+                                        <i className="fa fa-address-card fa-lg" /> Contact Us
+                                    </NavLink>
+                                </NavItem>
+
+                            </Nav>
+                        </Collapse>
                     </div>
                 </Navbar>
             </React.Fragment>
