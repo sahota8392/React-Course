@@ -24,6 +24,7 @@ class Main extends Component {
     }
 
     render() {
+
         const HomePage = () => {                //defined in maincomponent so only accessible here - locally scoped
         return (
             <Home 
@@ -32,17 +33,26 @@ class Main extends Component {
                 partner={this.state.partners.filter(partner => partner.featured)[0]}
             />
         );
-    };
+    }
+
+    const CampsiteWithId = ({match}) => {
+        return (
+            <CampsiteInfo 
+                    campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} //the +match is converting a string to a number so we can match number to number
+                    comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+                />
+            );
+        }
     
     return(
         <div>
             <Header />
             <Switch>
                 <Route path='/home' component = {HomePage} />
-                <Route path='/directory' render = {() => <Directory campsites = {this.state.campsites} />} /> 
+                <Route path='/directory/:campsiteId' component={CampsiteWithId} />  {/*The colons : tell the router that what follows the forward slash is parameter*/}
+                <Route path='/directory' render = {() => <Directory campsites = {this.state.campsites} />} />  {/* Switch will match you with the first route it can so you place the more specific routes first or we can change this to route exact path */}
                 <Route exact path='/contactus' component={Contact} />       
                 <Redirect to='/home' />                                {/* Redirect must the last one */}
-                
             </Switch>
             <Footer />
         </div>
@@ -52,7 +62,7 @@ class Main extends Component {
 
 export default Main;
 
-{/*             REMOVED AFTER HEADER AND FOOTER - AND updated to the REACT ROUTER
+/*             REMOVED AFTER HEADER AND FOOTER - AND updated to the REACT ROUTER
                 <Directory campsites={this.state.campsites} onClick={campsiteId => this.onCampsiteSelect(campsiteId)}/>
                 <CampsiteInfo campsite={this.state.campsites.filter(campsite => campsite.id === this.state.selectedCampsite)[0]} />
 
@@ -61,5 +71,5 @@ export default Main;
                         <NavbarBrand href="/">NuCamp</NavbarBrand>
                     </div>
                 </Navbar>
-*/}
+*/
 

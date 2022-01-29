@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'typeface-lobster';
 import 'typeface-open-sans';
-import 'font-awesome/css/font-awesome.css';           //yarn add font-awesome@4.7.0
+import 'font-awesome/css/font-awesome.css';               //yarn add font-awesome@4.7.0
 import 'bootstrap-social/bootstrap-social.css';           //yarn add bootstrap-social@5.1.1
 import App from './App';
 

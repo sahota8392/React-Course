@@ -1,6 +1,8 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import CampsiteInfo from './CampsiteInfoComponent';     //pulling data from CampsiteInfoComponent file for the comments to be displayed
+
 
 /*                                                      CLASS COMPONENT EXAMPLE 
     1. Begins with class keyword
@@ -64,14 +66,16 @@ render() {
         });
 */} 
 
-function RenderDirectoryItem({campsite, onClick}) {
+function RenderDirectoryItem({campsite}) {
     return (
         // <Card onClick={() => onClick(campsite.id)}>        REMOVED as this is rendered in the Directory Component
-            <Card>
-            <CardImg width="100%" src={campsite.image} alt={campsite.name} />
-            <CardImgOverlay>
-                <CardTitle>{campsite.name}</CardTitle>
-            </CardImgOverlay>
+        <Card>
+            <Link to={`/directory/${campsite.id}`}>         {/* whichever campsite is rendered, a link is created on search bar of the directory address -- BACKTICKS */}
+                    <CardImg width="100%" src={campsite.image} alt={campsite.name} />
+                <CardImgOverlay>
+                    <CardTitle>{campsite.name}</CardTitle>
+                </CardImgOverlay>
+            </Link>
         </Card>
     );
 }
@@ -88,6 +92,16 @@ function Directory(props) {
 
         return (
             <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <Breadcrumb>
+                        <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
+                        </Breadcrumb>
+                        <h2>Directory</h2>
+                        <hr />
+                    </div>
+                </div>
+
                 <div className="row">
                     {directory}
                 </div>                                                          
