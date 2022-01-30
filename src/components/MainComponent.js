@@ -6,7 +6,8 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { CAMPSITES } from '../shared/campsites';                     //importing a module
 import Home from './HomeComponent';                                  //importing Home Componenet from HomeComponent.js
-import Contact from './ContactComponent';
+import Contact from './ContactComponent';                           //importing Contact page
+import About from './AboutComponent';                               //imorting About page
 import { Switch, Route, Redirect } from 'react-router-dom';         //so when a link is clicked, we can use these to reroute users
 import { COMMENTS } from '../shared/comments';                      //'../' is same as using cd.. in terminal
 import { PARTNERS } from '../shared/partners';                      //update the class constructor to add these
@@ -43,15 +44,16 @@ class Main extends Component {
                 />
             );
         }
-    
+
     return(
         <div>
             <Header />
-            <Switch>
+            <Switch>        {/* Switch is later versions is now Routes */}
                 <Route path='/home' component = {HomePage} />
-                <Route path='/directory/:campsiteId' component={CampsiteWithId} />  {/*The colons : tell the router that what follows the forward slash is parameter*/}
+                <Route path='/directory/:campsiteId' component={CampsiteWithId} />  {/*The colons : tell the router that what follows the forward slash is parameter, this is more specific so it goes first */}
                 <Route path='/directory' render = {() => <Directory campsites = {this.state.campsites} />} />  {/* Switch will match you with the first route it can so you place the more specific routes first or we can change this to route exact path */}
-                <Route exact path='/contactus' component={Contact} />       
+                <Route exact path='/contactus' component={Contact} />
+                <Route exact path='/aboutus' render ={() => <About partners = {this.state.partners} />}  />    {/*  Routing link to the About page */}
                 <Redirect to='/home' />                                {/* Redirect must the last one */}
             </Switch>
             <Footer />
