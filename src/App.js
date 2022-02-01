@@ -3,19 +3,23 @@ import './App.css';
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';           //importing the React router after installing it
 import Main from './components/MainComponent';
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/configureStore';
 import './App.css';
 
-
-
-
+const store = ConfigureStore();   //capture return value in this const from the configureStore
 class App extends Component {
     render() {
         return (
-          <BrowserRouter>  {/* highest level componenet which gives it access to the main component and its children*/}            
-            <div className="App">
-              <Main />
-            </div>
-          </BrowserRouter>
+          //wrap everything inside the provider component
+          //this make redux store available to all connect components that are children of app
+          <Provider store = {store}>    
+            <BrowserRouter>
+              <div className = "App">
+                <Main />
+              </div>
+              </BrowserRouter>  {/* highest level componenet which gives it access to the main component and its children */}            
+          </Provider>
         );
     }
 }
