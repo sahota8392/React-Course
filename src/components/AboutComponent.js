@@ -81,7 +81,7 @@ function RenderPartner( {partner} ) {               //Deconstructing the propert
             <React.Fragment>
                 <Media object src={partner.image} alt={partner.name} width='150' />   {/* Boolean attribute of object, attribute of src for image and alt for description */}
                 <Media body className="ml-5 mb-4">      {/* Boolean attribute body and className attribute */}
-                    <Media heading>{partner.name}</Media>
+                    <Media heading>{partner.name}</Media> 
                 </Media>
             </React.Fragment>
         );

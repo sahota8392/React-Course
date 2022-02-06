@@ -1,22 +1,128 @@
 import React from 'react';               //Deafault React import and name import 
 import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, Col, Row, Label} from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Component } from 'react/cjs/react.production.min';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 
 /* class CampsiteInfo extends Component {                  //JSX - create child class CampsiteInfo from the parent class Component  */
 
-function RenderCampsite({campsite}) {                           //campsite is variable in the parameter list for renderCampsite
-        return(                                         //return sets the col size for medium or greater to be 5 out of 12 columns & margin 1
-                                                        //Copied the CARD component from DirectoryComponent to show the Card Title and Text on whatever card we click --- imported card details above for this to work
-            <div className="col-md-5 m-1">              
-                <Card>                                  
-                    <CardImg top src={campsite.image} alt={campsite.name} />
-                    <CardBody>
-                        {/* <CardTitle>{campsite.name}</CardTitle> */}
-                        <CardText>{campsite.description}</CardText>
-                    </CardBody>
-                </Card>
-            </div>
+    const required = val => val && val.length;
+    const maxLength = len => val => !val || (val.length <= len);
+    const minLength = len => val => val && (val.length >= len);
+
+    class CommentForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isModalOpen: false
+        }
+
+        this.toggleModal = this.toggleModal.bind(this);
+    }
+
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+    
+    formAlert (values) {
+        console.log("Current state is: " + JSON.stringify(values));
+        alert("Current state is: " + JSON.stringify(values));
+    }
+
+    render() {
+
+        return (
+            <div>
+                <Button outline color="secondary" onClick={this.toggleModal}><i className="fa fa-pencil fa-lg" /> Submit Comment</Button>
+
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
+                    <ModalBody>
+
+                        <LocalForm onSubmit={values => this.formAlert(values)}>
+
+                            <Row className="form-group">
+                                
+                                <Label htmlFor="rating" md={12}>Rating</Label>
+                            
+                                <Col md={12}>
+                                    <Control.select model=".rating" id="rating" name="rating"
+                                    className="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+
+                                    </Control.select>
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="author" md={12}>Your Name</Label>
+                                <Col md={12}>
+                                    <Control.text model=".author" id="author" name="author"
+                                        placeholder="Your Name"
+                                        className="form-control"
+                                        validators={{
+                                            required, 
+                                            minLength: minLength(2),
+                                            maxLength: maxLength(15)
+                                        }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".author"
+                                        show="touched"
+                                        component="div"
+                                        messages={{
+                                            required: 'Required',
+                                            minLength: 'Must be at least 2 characters',
+                                            maxLength: 'Must be 15 characters or less'
+                                        }}
+                                    /> 
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="text" md={12}>Comment</Label>
+                                <Col md={12}>
+                                    <Control.textarea model=".text" id="text" name="text"
+                                        rows="6"
+                                        className="form-control"
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={12}>
+                                    <Button type="submit" color="primary">
+                                        Submit
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </LocalForm>
+
+                    </ModalBody>
+                </Modal >
+
+            </div >
         );
+    }
+}
+
+
+function RenderCampsite({ campsite }) {
+    return (
+        <div className="col-md-5 m-1">
+            <Card>
+                <CardImg top src={campsite.image} alt={campsite.name} />
+                <CardBody>
+                    <CardText>{campsite.description}</CardText>
+                </CardBody>
+            </Card>
+        </div>
+    );
 }
 
 function RenderComments({comments}) {                                         //method to show the comments from the campsites.js
@@ -34,6 +140,7 @@ function RenderComments({comments}) {                                         //
                             </div>
                             );
                     })}
+                <CommentForm />
                 </div>                                                        //Return empty div if none of the above is applicable
             );
         }
@@ -67,7 +174,6 @@ function CampsiteInfo(props) {
     }
     return <div />
 }
-
 
 /*   REMOVING IN WEEK 2 for FUNCTION COMPONENT
     render() {                                       
