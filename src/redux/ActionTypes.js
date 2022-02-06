@@ -1,0 +1,1 @@
+export const ADD_COMMENT = 'ADD_COMMENT';       //creating a variable ADD_COMMENT and setting value to 'ADD_COMMENT' and exporting

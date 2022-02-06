@@ -19,6 +19,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
         }
 
         this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     toggleModal() {
@@ -27,9 +28,11 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
         });
     }
     
-    formAlert (values) {
-        console.log("Current state is: " + JSON.stringify(values));
-        alert("Current state is: " + JSON.stringify(values));
+    handleSubmit (values) {
+        this.toggleModal();
+        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);     //use these props so when form is submitted, action creator will create action using values of this and will get dispatched to reducer to update state
+        // console.log("Current state is: " + JSON.stringify(values));
+        // alert("Current state is: " + JSON.stringify(values));
     }
 
     render() {
@@ -42,7 +45,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                     <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
 
-                        <LocalForm onSubmit={values => this.formAlert(values)}>
+                        <LocalForm onSubmit={values => this.handleSubmit(values)}>
 
                             <Row className="form-group">
                                 
@@ -125,7 +128,7 @@ function RenderCampsite({ campsite }) {
     );
 }
 
-function RenderComments({comments}) {                                         //method to show the comments from the campsites.js
+function RenderComments({comments, addComment, campsiteId}) {                                         //method to show the comments from the campsites.js
         if(comments) {                                                       //checking comments aren't undefined
             return (                                                        
                 <div className="col-md-5 m-1">
@@ -140,7 +143,7 @@ function RenderComments({comments}) {                                         //
                             </div>
                             );
                     })}
-                <CommentForm />
+                <CommentForm campsiteId={campsiteId} addComment={addComment} />     {/* ADding the addComment  */}
                 </div>                                                        //Return empty div if none of the above is applicable
             );
         }
@@ -167,7 +170,10 @@ function CampsiteInfo(props) {
 
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments} />
+                    <RenderComments comments={props.comments}  
+                                    addComment={props.addComment}
+                                    campsiteId={props.campsite.id} 
+                    />        {/* Added the addComment with the campsiteID */}
                 </div>
             </div>
         );

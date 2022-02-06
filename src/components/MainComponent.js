@@ -7,13 +7,13 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';                                  //importing Home Componenet from HomeComponent.js
 import Contact from './ContactComponent';                           //importing Contact page
 import About from './AboutComponent';                               //imorting About page
+import { addComment } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';         //so when a link is clicked, we can use these to reroute users
 import { connect } from 'react-redux';
 // import { CAMPSITES } from '../shared/campsites';                     //importing a module
 // import { COMMENTS } from '../shared/comments';                      //'../' is same as using cd.. in terminal
 // import { PARTNERS } from '../shared/partners';                      //update the class constructor to add these
 // import { PROMOTIONS } from '../shared/promotions';
-
 
 //     constructor(props) {
 //         super(props);
@@ -32,6 +32,10 @@ const mapStateToProps = state => {
         partners: state.partners, 
         promotions: state.promotions
     };
+};
+
+const mapDispatchToProps = {                            //setup as an object
+    addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text))      //property (values)       // => action creator passing in data
 };
 
 class Main extends Component {
@@ -53,7 +57,9 @@ class Main extends Component {
         return (
             <CampsiteInfo 
             campsite={this.props.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} 
-            comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}  />
+            comments={this.props.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
+            addComment={this.props.addComment}
+                />      //passing the addComment function to it as a prop
                     // campsite={this.state.campsites.filter(campsite => campsite.id === +match.params.campsiteId)[0]} //the +match is converting a string to a number so we can match number to number
                     // comments={this.state.comments.filter(comment => comment.campsiteId === +match.params.campsiteId)}
         );
@@ -76,7 +82,7 @@ class Main extends Component {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));      //allows main component to take its state from redux store (withRouter wraps it so React router works)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));      //allows main component to take its state from redux store (withRouter wraps it so React router works)  //adding mapDispatchToProps as the second argument in the connect agrument
 
 /*             REMOVED AFTER HEADER AND FOOTER - AND updated to the REACT ROUTER
                 <Directory campsites={this.state.campsites} onClick={campsiteId => this.onCampsiteSelect(campsiteId)}/>
