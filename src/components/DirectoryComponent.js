@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import CampsiteInfo from './CampsiteInfoComponent';     //pulling data from CampsiteInfoComponent file for the comments to be displayed
+import { Loading } from './LoadingComponent';
 
 
 /*                                                      CLASS COMPONENT EXAMPLE 
@@ -89,7 +90,27 @@ function Directory(props) {
         );
     });
 
-
+if (props.campsites.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    if (props.campsites.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <h4>{props.campsites.errMess}</h4>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    
         return (
             <div className="container">
                 <div className="row">
