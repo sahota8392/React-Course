@@ -82,8 +82,8 @@ function RenderDirectoryItem({campsite}) {
 }
 
 function Directory(props) {
-    const directory = props.campsites.map(campsite => {
-        return(
+    const directory = props.campsites.campsites.map(campsite => {
+        return (
             <div key={campsite.id} className="col-md-5 m-1">
                 <RenderDirectoryItem campsite={campsite} />
             </div>
@@ -110,7 +110,7 @@ if (props.campsites.isLoading) {
             </div>
         );
     }
-    
+
         return (
             <div className="container">
                 <div className="row">

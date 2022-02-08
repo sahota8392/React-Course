@@ -10,6 +10,8 @@ import About from './AboutComponent';                               //imorting A
 import { addComment, fetchCampsites } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';         //so when a link is clicked, we can use these to reroute users
 import { connect } from 'react-redux';
+import { actions } from 'react-redux-form';
+
 // import { CAMPSITES } from '../shared/campsites';                     //importing a module
 // import { COMMENTS } from '../shared/comments';                      //'../' is same as using cd.. in terminal
 // import { PARTNERS } from '../shared/partners';                      //update the class constructor to add these
@@ -36,7 +38,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {                            //setup as an object
     addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),      //property (values)       // => action creator passing in data
-    fetchCampsites: () => (fetchCampsites())        //fetchCampsites action creator available to mainComponent as props
+    fetchCampsites: () => (fetchCampsites()),        //fetchCampsites action creator available to mainComponent as props
+    resetFeedbackForm: () => (actions.reset('feedbackForm'))
 };
 
 class Main extends Component {
@@ -82,7 +85,7 @@ class Main extends Component {
                 <Route path='/home' component = {HomePage} />
                 <Route path='/directory/:campsiteId' component={CampsiteWithId} />  {/*The colons : tell the router that what follows the forward slash is parameter, this is more specific so it goes first */}
                 <Route path='/directory' render = {() => <Directory campsites = {this.props.campsites} />} />  {/* Switch will match you with the first route it can so you place the more specific routes first or we can change this to route exact path */}
-                <Route exact path='/contactus' component={Contact} />
+                <Route exact path='/contactus' render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />                
                 <Route exact path='/aboutus' render ={() => <About partners = {this.props.partners} />}  />    {/*  Routing link to the About page, changed to this.props from this.state for redux */}
                 <Redirect to='/home' />                                {/* Redirect must the last one */}
             </Switch>
