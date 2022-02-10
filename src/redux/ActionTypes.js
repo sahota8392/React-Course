@@ -2,3 +2,9 @@ export const ADD_COMMENT = 'ADD_COMMENT';       //creating a variable ADD_COMMEN
 export const CAMPSITES_LOADING = 'CAMPSITES_LOADING';       //campsites is loading data, waiting on response
 export const CAMPSITES_FAILED = 'CAMPSITES_FAILED';         //server request failed, load failed
 export const ADD_CAMPSITES = 'ADD_CAMPSITES';               //data is retrieved successfully
+export const ADD_COMMENTS = 'ADD_COMMENTS';
+export const COMMENTS_FAILED = 'COMMENTS_FAILED';
+export const PROMOTIONS_LOADING = 'PROMOTIONS_LOADING';
+export const ADD_PROMOTIONS = 'ADD_PROMOTIONS';
+export const PROMOTIONS_FAILED = 'PROMOTIONS_FAILED';
+

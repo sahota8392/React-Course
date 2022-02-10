@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Component } from 'react/cjs/react.production.min';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 /* class CampsiteInfo extends Component {                  //JSX - create child class CampsiteInfo from the parent class Component  */
 
@@ -29,9 +30,9 @@ import { Loading } from './LoadingComponent';
         });
     }
     
-    handleSubmit (values) {
+    handleSubmit(values) {
         this.toggleModal();
-        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);     //use these props so when form is submitted, action creator will create action using values of this and will get dispatched to reducer to update state
+        this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);     //use these props so when form is submitted, action creator will create action using values of this and will get dispatched to reducer to update state
         // console.log("Current state is: " + JSON.stringify(values));
         // alert("Current state is: " + JSON.stringify(values));
     }
@@ -120,7 +121,7 @@ function RenderCampsite({ campsite }) {
     return (
         <div className="col-md-5 m-1">
             <Card>
-                <CardImg top src={campsite.image} alt={campsite.name} />
+                <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
                 <CardBody>
                     <CardText>{campsite.description}</CardText>
                 </CardBody>
@@ -129,7 +130,7 @@ function RenderCampsite({ campsite }) {
     );
 }
 
-function RenderComments({comments, addComment, campsiteId}) {                                         //method to show the comments from the campsites.js
+function RenderComments({comments, postComment, campsiteId}) {                                         //method to show the comments from the campsites.js
         if(comments) {                                                       //checking comments aren't undefined
             return (                                                        
                 <div className="col-md-5 m-1">
@@ -144,7 +145,7 @@ function RenderComments({comments, addComment, campsiteId}) {                   
                             </div>
                             );
                     })}
-                <CommentForm campsiteId={campsiteId} addComment={addComment} />     {/* ADding the addComment  */}
+                <CommentForm campsiteId={campsiteId} postComment={postComment} />     {/* ADding the addComment  */}
                 </div>                                                        //Return empty div if none of the above is applicable
             );
         }
@@ -193,7 +194,7 @@ function CampsiteInfo(props) {
                 <div className="row">
                     <RenderCampsite campsite={props.campsite} />
                     <RenderComments comments={props.comments}  
-                                    addComment={props.addComment}
+                                    postComment={props.postComment}
                                     campsiteId={props.campsite.id} 
                     />        {/* Added the addComment with the campsiteID */}
                 </div>

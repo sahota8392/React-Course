@@ -3,7 +3,7 @@ import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } 
 import { Link } from 'react-router-dom';
 import CampsiteInfo from './CampsiteInfoComponent';     //pulling data from CampsiteInfoComponent file for the comments to be displayed
 import { Loading } from './LoadingComponent';
-
+import { baseUrl } from '../shared/baseUrl';
 
 /*                                                      CLASS COMPONENT EXAMPLE 
     1. Begins with class keyword
@@ -72,7 +72,7 @@ function RenderDirectoryItem({campsite}) {
         // <Card onClick={() => onClick(campsite.id)}>        REMOVED as this is rendered in the Directory Component
         <Card>
             <Link to={`/directory/${campsite.id}`}>         {/* whichever campsite is rendered, a link is created on search bar of the directory address -- BACKTICKS */}
-                    <CardImg width="100%" src={campsite.image} alt={campsite.name} />
+                    <CardImg width="100%" src={baseUrl + campsite.image} alt={campsite.name} />
                 <CardImgOverlay>
                     <CardTitle>{campsite.name}</CardTitle>
                 </CardImgOverlay>
