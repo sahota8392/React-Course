@@ -11,6 +11,7 @@ import { postComment, fetchCampsites, fetchComments, fetchPromotions } from '../
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';         //so when a link is clicked, we can use these to reroute users
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 // import { CAMPSITES } from '../shared/campsites';                     //importing a module
 // import { COMMENTS } from '../shared/comments';                      //'../' is same as using cd.. in terminal
@@ -90,6 +91,9 @@ class Main extends Component {
     return(
         <div>
             <Header />
+            <TransitionGroup>
+                <CSSTransition key = {this.props.location.key} classNames='page' time={300}>
+
             <Switch>        {/* Switch is later versions is now Routes */}
                 <Route path='/home' component = {HomePage} />
                 <Route path='/directory/:campsiteId' component={CampsiteWithId} />  {/*The colons : tell the router that what follows the forward slash is parameter, this is more specific so it goes first */}
@@ -98,6 +102,9 @@ class Main extends Component {
                 <Route exact path='/aboutus' render ={() => <About partners = {this.props.partners} />}  />    {/*  Routing link to the About page, changed to this.props from this.state for redux */}
                 <Redirect to='/home' />                                {/* Redirect must the last one */}
             </Switch>
+
+            </CSSTransition>
+            </TransitionGroup>
             <Footer />
         </div>
     );
