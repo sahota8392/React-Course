@@ -206,38 +206,38 @@ export const addPartners = promotions => ({
 
 
 
-
+//Feedback
 export const postFeedback = (feedback) => dispatch =>  {
     
     const newComment = {
         ...feedback
     };
-console.log("hi")
-    return fetch(baseUrl + 'feedback', {
-            method: "POST",
-            body: JSON.stringify(newComment),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(response => {
-                if (response.ok) {
-                    return response;
-                } else {
-                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
-                    error.response = response;
-                    throw error;
-                }
-            },
-            error => { throw error; }
-        )
-        .then(response => response.json())
-        //.then(response => postFeedback(response))
-        .then(console.log('Current State is: ' + JSON.stringify(newComment)))
-        .then(alert('Thank you for your feedback! \r\n\r\n You Submitted: ' + JSON.stringify(newComment)))
-        .catch(error => {
-            console.log('post comment', error.message);
-            alert('Your comment could not be posted\nError: ' + error.message);
-        });
+        console.log("hi")
+            return fetch(baseUrl + 'feedback', {
+                    method: "POST",
+                    body: JSON.stringify(newComment),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => {
+                        if (response.ok) {
+                            return response;
+                        } else {
+                            const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                            error.response = response;
+                            throw error;
+                        }
+                    },
+                    error => { throw error; }
+                )
+                .then(response => response.json())
+                //.then(response => postFeedback(response))
+                .then(console.log('Current State is: ' + JSON.stringify(newComment)))
+                .then(alert('Thank you for your feedback! \r\n\r\n You Submitted: ' + JSON.stringify(newComment)))
+                .catch(error => {
+                    console.log('post comment', error.message);
+                    alert('Your comment could not be posted\nError: ' + error.message);
+                });
 
 };
