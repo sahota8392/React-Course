@@ -6,6 +6,7 @@ import { Component } from 'react/cjs/react.production.min';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 /* class CampsiteInfo extends Component {                  //JSX - create child class CampsiteInfo from the parent class Component  */
 
@@ -120,12 +121,18 @@ import { baseUrl } from '../shared/baseUrl';
 function RenderCampsite({ campsite }) {
     return (
         <div className="col-md-5 m-1">
+            <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
             <Card>
                 <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
                 <CardBody>
                     <CardText>{campsite.description}</CardText>
                 </CardBody>
             </Card>
+            </FadeTransform>
         </div>
     );
 }
@@ -134,17 +141,22 @@ function RenderComments({comments, postComment, campsiteId}) {                  
         if(comments) {                                                       //checking comments aren't undefined
             return (                                                        
                 <div className="col-md-5 m-1">
-                    <h4>Comments</h4>                                       
-                    {comments.map(comment => {         //.map iterates thru array and performs given callback function each time -- {Embeding JavaScript within JSX}
-                            return(
-                                <div key={comment.id}>                      {/* searching comments by the id for each */}
-                                <p> 
-                                    {comment.text}<br />                    {/* returns comments in two lines of the text and author below. ---- <br /> starts a new line   */}
-                                    --{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} 
-                                </p>
-                            </div>
-                            );
-                    })}
+                    <h4>Comments</h4>    
+                    <Stagger in>
+                        {comments.map(comment => {         //.map iterates thru array and performs given callback function each time -- {Embeding JavaScript within JSX}
+                                return(
+                                    <Fade in key={comment.id}>                      {/* searching comments by the id for each */}
+                                    <div>
+                                        <p> 
+                                        {comment.text}<br />                    {/* returns comments in two lines of the text and author below. ---- <br /> starts a new line   */}
+                                        --{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))} 
+                                        </p>
+                                    </div>
+                                </Fade>
+                                );
+                        })
+                    }
+                    </Stagger>
                 <CommentForm campsiteId={campsiteId} postComment={postComment} />     {/* ADding the addComment  */}
                 </div>                                                        //Return empty div if none of the above is applicable
             );

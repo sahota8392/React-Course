@@ -32,7 +32,7 @@ class Contact extends Component {
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);     //binding the this.setState to the handleInputChange 
-        this.handleSubmit = this.handleSubmit.bind(this);           
+        // this.handleSubmit = this.handleSubmit.bind(this);           
     }
 
     // validate(firstName, lastName, phoneNum, email) {
@@ -88,9 +88,10 @@ class Contact extends Component {
     }
 
     handleSubmit(values) {                                                       //handles form submission - changed events to values
-        console.log('Current state is: ' + JSON.stringify(this.values));         //JSON.stringify converts JavaScript value to a JSON string value - changed state to values
-        alert('Current state is: ' + JSON.stringify(this.values));               //same coding but we get top in console and this in a alert box popup
-        this.props.resetFeedbackForm();
+        this.props.postFeedback(values);
+        // console.log('Current state is: ' + JSON.stringify(this.values));         //JSON.stringify converts JavaScript value to a JSON string value - changed state to values
+        // alert('Current state is: ' + JSON.stringify(this.values));               //same coding but we get top in console and this in a alert box popup
+        // this.props.resetFeedbackForm();
     }
 // event.preventDefault();                                                 //when you submit form, this will stop page from refreshing
 

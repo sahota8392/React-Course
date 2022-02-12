@@ -7,7 +7,7 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';                                  //importing Home Componenet from HomeComponent.js
 import Contact from './ContactComponent';                           //importing Contact page
 import About from './AboutComponent';                               //imorting About page
-import { postComment, fetchCampsites, fetchComments, fetchPromotions } from '../redux/ActionCreators';
+import { postComment, fetchCampsites, fetchComments, fetchPromotions, fetchPartners, postFeedback } from '../redux/ActionCreators';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';         //so when a link is clicked, we can use these to reroute users
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
@@ -42,7 +42,9 @@ const mapDispatchToProps = {                            //setup as an object
     fetchCampsites: () => (fetchCampsites()),        //fetchCampsites action creator available to mainComponent as props
     resetFeedbackForm: () => (actions.reset('feedbackForm')),
     fetchComments: () => (fetchComments()),
-    fetchPromotions: () => (fetchPromotions())
+    fetchPromotions: () => (fetchPromotions()),
+    fetchPartners: () => (fetchPartners()),
+    postFeedback: (text) => (postFeedback(text))
 };
 
 class Main extends Component {
@@ -51,6 +53,7 @@ class Main extends Component {
         this.props.fetchCampsites();
         this.props.fetchComments();
         this.props.fetchPromotions();
+        this.props.fetchPartners();
     }
 
     render() {
@@ -63,14 +66,16 @@ class Main extends Component {
                     promotion={this.props.promotions.promotions.filter(promotion => promotion.featured)[0]}
                     promotionLoading={this.props.promotions.isLoading}
                     promotionErrMess={this.props.promotions.errMess}
-                    partner={this.props.partners.filter(partner => partner.featured)[0]}
+                    partner={this.props.partners.partners.filter(partner => partner.featured)[0]}
+                    partnerLoading={this.props.partners.isLoading}
+                    partnerErrMess={this.props.partners.errMess}
                 />
+            );
                     // promotion={this.props.promotions.filter(promotion => promotion.featured)[0]}
                     // partner={this.props.partners.filter(partner => partner.featured)[0]}
                     // campsite={this.state.campsites.filter(campsite => campsite.featured)[0]}    //Filtering for objects where featured propery evaluates as true
                     // promotion={this.state.promotions.filter(promotion => promotion.featured)[0]}  //filter returns an array so we need to pass an object, using [0] to access first object in array
                     // partner={this.state.partners.filter(partner => partner.featured)[0]}         //UPDATED TO THE ABOVE REDUX
-            );
         };
 
     const CampsiteWithId = ({match}) => {
@@ -89,24 +94,22 @@ class Main extends Component {
     };
 
     return(
-        <div>
-            <Header />
-            <TransitionGroup>
-                <CSSTransition key = {this.props.location.key} classNames='page' time={300}>
-
-            <Switch>        {/* Switch is later versions is now Routes */}
-                <Route path='/home' component = {HomePage} />
-                <Route path='/directory/:campsiteId' component={CampsiteWithId} />  {/*The colons : tell the router that what follows the forward slash is parameter, this is more specific so it goes first */}
-                <Route path='/directory' render = {() => <Directory campsites = {this.props.campsites} />} />  {/* Switch will match you with the first route it can so you place the more specific routes first or we can change this to route exact path */}
-                <Route exact path='/contactus' render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />                
-                <Route exact path='/aboutus' render ={() => <About partners = {this.props.partners} />}  />    {/*  Routing link to the About page, changed to this.props from this.state for redux */}
-                <Redirect to='/home' />                                {/* Redirect must the last one */}
-            </Switch>
-
-            </CSSTransition>
-            </TransitionGroup>
-            <Footer />
-        </div>
+            <div>
+                <Header />
+                <TransitionGroup>
+                    <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+                        <Switch>
+                            <Route path='/home' component={HomePage} />
+                            <Route exact path='/directory' render={() => <Directory campsites={this.props.campsites} />} />
+                            <Route path='/directory/:campsiteId' component={CampsiteWithId} />
+                            <Route exact path='/contactus' render={() => <Contact postFeedback={this.props.postFeedback} />} />
+                            <Route exact path='/aboutus' render={() => <About partners={this.props.partners} />} />
+                            <Redirect to='/home' />
+                        </Switch>
+                    </CSSTransition>
+                </TransitionGroup>
+                <Footer />
+            </div>
     );
     }
 }

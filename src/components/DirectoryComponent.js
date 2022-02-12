@@ -1,9 +1,10 @@
 import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import CampsiteInfo from './CampsiteInfoComponent';     //pulling data from CampsiteInfoComponent file for the comments to be displayed
+// import CampsiteInfo from './CampsiteInfoComponent';     //pulling data from CampsiteInfoComponent file for the comments to be displayed
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+
 
 /*                                                      CLASS COMPONENT EXAMPLE 
     1. Begins with class keyword

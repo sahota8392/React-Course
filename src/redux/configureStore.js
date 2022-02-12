@@ -6,7 +6,7 @@ import { Promotions } from './promotions';
 import thunk from 'redux-thunk';                    //first install thunk and logger, import applyMiddleware, thunk and logger
 import logger from 'redux-logger';
 import { createForms } from 'react-redux-form';
-import { InitialFeedback } from './form';
+import { InitialFeedback } from './forms';
 
 
 //variable is const store with the reducer function and initial state set inside it
@@ -20,7 +20,7 @@ export const ConfigureStore = () => {
             ...createForms({
                 feedbackForm: InitialFeedback
             })
-        }),
+        }),    
         applyMiddleware(thunk, logger)          //adding the thunk and logger to the applyMiddleware
     );
 
